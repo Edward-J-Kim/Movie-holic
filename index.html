@@ -12,6 +12,20 @@
 </head>
 
 <body>
+  <script>
+        function ajaxRequest() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://api.jikan.moe/v4/top/anime');
+            xhr.responseType = 'json';
+            xhr.addEventListener('load', function () {
+              console.log(xhr.status);
+              console.log(xhr.response);
+            });
+            xhr.send();
+          }
+
+          ajaxRequest();
+  </script>
   <header>
     <div class="container">
       <nav class="navbar column-full">
@@ -25,14 +39,34 @@
       <button type="button" data-view="topAiring">Top Airing</button>
       <button type="button" data-view="genre">Genre</button>
     </div>
+    <div data-view="homepage" class="mainPage-container">
+      <div class="welcome-title">
+        <h1>Welcome to Animé World</h1>
+        <img class="main_img" src="images/main.jpeg">
+      </div>
+    </div>
     <div class="view-container">
-      <div class="view" data-view="topAnime">
+      <div class="topAnime hidden" data-view="topAnime" >
+        <div class="filter-bar">
+          <div>
+            <label class="filter-by" for="choices">Filter By</label>
+          </div>
+          <div>
+            <select name="choices" id="filter-by">
+              <option value="favorites">Oldest</option>
+              <option value="weapon-classes">Newest</option>
+              <option value="most-popular">Most Popular</option>
+            </select>
+          </div>
+        </div>
+        <div class="table">
+
+        </div>
+      </div>
+      <div class="topAiring hidden" data-view="topAiring">
 
       </div>
-      <div class="view" data-view="topAiring">
-
-      </div>
-      <div class="view" data-view="genre">
+      <div class="genre hidden" data-view="genre">
       </div>
     </div>
   </main>
