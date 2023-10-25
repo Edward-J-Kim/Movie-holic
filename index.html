@@ -4,69 +4,171 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AJAX Project</title>
+  <meta property="og:title" content="MyMovieList">
+  <meta property="og:image" content="https://quannampham.github.io/mymovielist/images/og-image.jpg">
+  <meta property="og:url" content="https://quannampham.github.io/mymovielist/">
+  <meta property="og:description" content="Add your favorite movies to a list!">
+  <title>Movie Holic</title>
   <link rel="icon" href="images/favicon.ico">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600&family=Roboto:wght@300;400&family=RocknRoll+One&display=swap"
+    rel="stylesheet">
+  <script src="https://kit.fontawesome.com/914c274f09.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
-  <script>
-        function ajaxRequest() {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'https://api.jikan.moe/v4/top/anime');
-            xhr.responseType = 'json';
-            xhr.addEventListener('load', function () {
-              console.log(xhr.status);
-              console.log(xhr.response);
-            });
-            xhr.send();
-          }
-
-          ajaxRequest();
-  </script>
+  <div class="modal hidden">
+    <div class="modal-box row">
+      <div class="row">
+        <div class="column-full">
+          <h5 class="text-center">Are you sure you want to delete?</h5>
+        </div>
+      </div>
+      <div class="row modal-btn">
+        <div class="column-half">
+          <a href="#" class="yes btn">YES</a>
+        </div>
+        <div class="column-half">
+          <a href="#" class="no btn">NO</a>
+        </div>
+      </div>
+    </div>
+  </div>
   <header>
-    <div class="container">
-      <nav class="navbar column-full">
-        <h3>Animé World</h3>
-      </nav>
+    <div class="container hidden" data-view="nav">
+      <div class="row nav-content">
+        <div class="column-one-fourth">
+          <div class="header-btn-container">
+            <a href="#" id="nav-header" class="header-btn">Movie-Holic</a>
+          </div>
+        </div>
+        <div class="column-one-half nav-search">
+          <form action="" id="nav-form">
+            <div class="search row">
+              <input type="text" placeholder="Movie title" id="nav-input" required>
+              <button type="submit" class="fa-btn">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="column-one-fourth">
+          <div class="header-btn-container">
+            <a href="#" id="list" data-item="list" class="header-btn">List</a>
+          </div>
+        </div>
+      </div>
     </div>
   </header>
   <main>
-    <div id="button-container" class="column-full">
-      <button type="button" data-view="topAnime">Top Anime</button>
-      <button type="button" data-view="topAiring">Top Airing</button>
-      <button type="button" data-view="genre">Genre</button>
-    </div>
-    <div data-view="homepage" class="mainPage-container">
-      <div class="welcome-title">
-        <h1>Welcome to Animé World</h1>
-        <img class="main_img" src="images/main.jpeg">
+    <div class="loading hidden">
+      <div class="lds-ellipsis">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
       </div>
     </div>
-    <div class="view-container">
-      <div class="topAnime hidden" data-view="topAnime" >
-        <div class="filter-bar">
-          <div>
-            <label class="filter-by" for="choices">Filter By</label>
-          </div>
-          <div>
-            <select name="choices" id="filter-by">
-              <option value="favorites">Oldest</option>
-              <option value="weapon-classes">Newest</option>
-              <option value="most-popular">Most Popular</option>
-            </select>
+    <div class="banner">
+      <img src="./images/movies 2018.jpeg" class="banner"><br><br>
+    </div>
+    <div class="container" data-view="home-page">
+      <div class="row">
+        <div class="column-full">
+          <div class="row justify-center">
+
+            <div class="column-full text-center">
+              <h2>Movie-Holic</h2>
+            </div>
+            <form action="" id="home-form">
+              <div class="search row">
+                <input type="text" placeholder="Type a Movie Title you'd like to know" required id="home-input">
+                <button type="submit" class="fa-btn">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+              </div>
+            </form>
           </div>
         </div>
-        <div class="table">
-
+      </div>
+      <div class="view-list-btn">
+        <div class="row">
+          <div class="column-full text-center">
+            <a href="#" data-item="list-btn" class="btn">LIST</a>
+          </div>
         </div>
       </div>
-      <div class="topAiring hidden" data-view="topAiring">
-
+    </div>
+    <div class="container hidden" data-view="movie-page">
+      <div class="row">
+        <div class="column-one-fourth">
+          <i class="fa-solid fa-xmark"></i>
+        </div>
       </div>
-      <div class="genre hidden" data-view="genre">
+      <div class="movie-page-content">
+        <div class="row">
+          <div class="column-one-fourth margin-auto">
+            <div class="row">
+              <div class="column-full text-center">
+                <img
+                  src="https://m.media-amazon.com/images/M/MV5BMDU2ZWJlMjktMTRhMy00ZTA5LWEzNDgtYmNmZTEwZTViZWJkXkEyXkFqcGdeQXVyNDQ2OTk4MzI@._V1_SX300.jpg"
+                  alt="" class="movie-page-img">
+              </div>
+            </div>
+          </div>
+          <div class="column-three-fourths margin-auto row justify-center">
+            <div class="page-text-container ">
+              <div class="row ">
+                <div class="column-full">
+                  <h1 id="movie-title">Toy Story (1995)</h1>
+                  <h4 id="movie-director">Directed by John Laseter</h4>
+                </div>
+              </div>
+              <div class="middle-detail-content">
+                <div class="row">
+                  <div class="column-full">
+                    <div class="text">
+                      <span class="label">Genre:</span>
+                      <span id="genre">Animation, Adventure, Comedy</span>
+
+                    </div>
+                    <div class="text">
+                      <span class="label">Rated:</span>
+                      <span id="rated">G</span>
+                    </div>
+                    <div class="text">
+
+                      <span class="label">IMDB:</span>
+                      <span id="score">8.3/10</span>
+                    </div>
+
+                    <div class="text">
+                      <span class="label">Starring:</span>
+                      <span id="actors">Tom Hanks, Tim Allen, Don Rickles</span>
+                    </div>
+                    <div class="text">
+                      <p id="plot">A cowboy doll is profoundly threatened and jealous when a new spaceman action figure
+                        supplants him as top toy in a boy's bedroom.</p>
+                    </div>
+                    <div class="text">
+                      <div class="btn-container row">
+                        <i class="fa-solid fa-plus"></i>
+                        <i class="fa-solid fa-check hidden"></i>
+                        <i class="fa-solid fa-minus hidden"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </main>
